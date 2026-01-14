@@ -113,28 +113,33 @@ void loop(){
   while(digitalRead(ctrlBtn) == LOW && noObject)
   {
     Serial.println("Running Code");
-    moveMotor(enA, in1, in2, 75);
-    moveMotor(enB, in3, in4, 75);
+    moveMotor(enA, in1, in2, maxSpeed);
+    moveMotor(enB, in3, in4, maxSpeed);
 
     noObject = getUSDistance(trigPin, echoPin) >= closeDistance ? true : false;  
     
     if(!noObject)
     {
-      Serial.println("Reverse");
-      moveMotor(enA, in1, in2, -100);
-      moveMotor(enB, in3, in4, -100);
-      delay(1000);
+      // Serial.println("Reverse");
+      // moveMotor(enA, in1, in2, -maxSpeed);
+      // moveMotor(enB, in3, in4, -maxSpeed);
+      // delay(1000);
+      // moveMotor(enA, in1, in2, 0);
+      // moveMotor(enB, in3, in4, 0);
+      Serial.println("Stop");
       moveMotor(enA, in1, in2, 0);
       moveMotor(enB, in3, in4, 0);
+
 
       while(!noObject)
     {
       Serial.println("Turning Left");
-      moveMotor(enA, in1, in2, 100);
-      moveMotor(enB, in3, in4, 0);
+      moveMotor(enA, in1, in2, maxSpeed);
+      moveMotor(enB, in3, in4, -maxSpeed);
 
       delay(1000);
       moveMotor(enA, in1, in2, 0);
+      moveMotor(enB, in3, in4, -maxSpeed);
 
       noObject = getUSDistance(trigPin, echoPin) >= closeDistance ? true : false;
     }
